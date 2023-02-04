@@ -1,7 +1,7 @@
 package com.example.myshoppinglist.presentation
 
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Observer
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppinglist.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
     lateinit var mainViewModel: MainViewModel
     lateinit var adapterShopList: ShopListAdapter
@@ -30,17 +30,15 @@ class MainActivity : AppCompatActivity() {
             adapterShopList.submitList(it)
         })
 
-        val floatingButton = findViewById<FloatingActionButton>(R.id.floatingActionButton)
-        floatingButton.setOnClickListener {
+        val floatingButtonAdd = findViewById<FloatingActionButton>(R.id.floatingActionButtonAdd)
+        floatingButtonAdd.setOnClickListener {
             if (isOnePaneMode()) {
                 val intent = ShopItemActivity.newIntentAdd(this)
                 startActivity(intent)
             } else {
                 launchFragment(ShopItemFragment.newShopItemFragmentAdd())
             }
-
         }
-
     }
 
     private fun setupRecyclerView() {
@@ -113,5 +111,8 @@ class MainActivity : AppCompatActivity() {
             fragment).addToBackStack(null).commit()
     }
 
-
+    override fun onEditingFinished() {
+        Toast.makeText(this@MainActivity, "Success", Toast.LENGTH_LONG).show()
+        supportFragmentManager.popBackStack()
+    }
 }

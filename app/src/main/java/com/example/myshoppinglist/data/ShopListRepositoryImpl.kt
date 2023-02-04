@@ -13,10 +13,12 @@ object ShopListRepositoryImpl : ShopListRepository {
     private var shopId = 0
 
     init {
-        for (i in 0..10) {
-            val item = ShopItem("Name $i", i, Random.nextBoolean())
-            addShopItem(item)
-        }
+            val itemTest1 = ShopItem("Хлеб", 1, false)
+            val itemTest2 = ShopItem("Молоко", 2, true)
+            val itemTest3 = ShopItem("Яица", 10, false)
+            addShopItem(itemTest1)
+            addShopItem(itemTest2)
+            addShopItem(itemTest3)
     }
 
     override fun getShopList(): LiveData<List<ShopItem>> {
@@ -42,11 +44,6 @@ object ShopListRepositoryImpl : ShopListRepository {
     }
 
     override fun editShopItem(shopItem: ShopItem) {
-//Мой вариант попробовать потом:
-//        val oldElement = getShopItem(shopItem.id)
-//        listDB.remove(oldElement)
-//        listDB.add(shopItem)
-
         val oldElement = getShopItem(shopItem.id)
         listShopItem.remove(oldElement)
         addShopItem(shopItem)

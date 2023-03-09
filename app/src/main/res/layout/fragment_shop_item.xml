@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="shopItemViewModelBinding"
+            type="com.example.myshoppinglist.presentation.ShopItemViewModel" />
+    </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +21,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
+        app:errorInputName="@{shopItemViewModelBinding.errorInputName}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,7 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name_shop_item_activity"
-            android:inputType="textCapWords" />
+            android:inputType="textCapWords"
+            android:text="@{shopItemViewModelBinding.shopItem.name}"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -34,6 +44,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
+        app:errorInputCount="@{shopItemViewModelBinding.errorInputCount}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilName"
@@ -44,7 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/count_shop_item_activity"
-            android:inputType="number" />
+            android:inputType="number"
+            android:text="@{String.valueOf(shopItemViewModelBinding.shopItem.count)}"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -57,3 +69,5 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

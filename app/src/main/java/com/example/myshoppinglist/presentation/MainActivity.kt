@@ -3,32 +3,38 @@ package com.example.myshoppinglist.presentation
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppinglist.R
-import com.example.myshoppinglist.data.AppDatabase
 import com.example.myshoppinglist.databinding.ActivityMainBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.myshoppinglist.di.ApplicationComponent
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 
-    lateinit var mainViewModel: MainViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    val mainViewModel: MainViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+    }
+    val component by lazy {
+        (application as MyShopListApplication).component
+    }
+
     lateinit var adapterShopList: ShopListAdapter
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
-
-//        val db = AppDatabase.getInstance(application)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupRecyclerView()
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         mainViewModel.shopListLD.observe(this, Observer {
             adapterShopList.submitList(it)
         })

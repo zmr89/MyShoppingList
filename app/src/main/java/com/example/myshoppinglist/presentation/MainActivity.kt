@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppinglist.R
 import com.example.myshoppinglist.databinding.ActivityMainBinding
-import com.example.myshoppinglist.di.ApplicationComponent
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
@@ -34,7 +33,7 @@ class MainActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedList
         setContentView(binding.root)
 
         setupRecyclerView()
-//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
         mainViewModel.shopListLD.observe(this, Observer {
             adapterShopList.submitList(it)
         })

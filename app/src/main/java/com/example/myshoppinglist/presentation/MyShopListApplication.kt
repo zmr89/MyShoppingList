@@ -1,7 +1,6 @@
 package com.example.myshoppinglist.presentation
 
 import android.app.Application
-import com.example.myshoppinglist.di.ApplicationComponent
 import com.example.myshoppinglist.di.DaggerApplicationComponent
 
 class MyShopListApplication: Application() {

@@ -12,11 +12,13 @@ import dagger.Provides
 @Module
 interface DataModule {
 
+    @ApplicationScope
     @Binds
     fun bindShopListRepositoryImpl(repositoryImpl: ShopListRepositoryImpl): ShopListRepository
 
 
     companion object {
+        @ApplicationScope
         @Provides
         fun provideDao(
             application: Application

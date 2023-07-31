@@ -3,12 +3,9 @@ package com.example.myshoppinglist.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myshoppinglist.R
 import com.example.myshoppinglist.domain.ShopItem
-import kotlin.math.log
 
 class ShopItemActivity : AppCompatActivity(), ShopItemFragment.OnEditingFinishedListener {
 

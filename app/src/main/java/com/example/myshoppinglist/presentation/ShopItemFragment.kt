@@ -4,23 +4,28 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.myshoppinglist.R
 import com.example.myshoppinglist.databinding.FragmentShopItemBinding
+import com.example.myshoppinglist.di.ApplicationComponent
 import com.example.myshoppinglist.domain.ShopItem
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import javax.inject.Inject
 
 class ShopItemFragment : Fragment() {
 
-    lateinit var shopItemViewModel: ShopItemViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    val shopItemViewModel: ShopItemViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory).get(ShopItemViewModel::class.java)
+    }
+    val component: ApplicationComponent by lazy {
+        (requireActivity().application as MyShopListApplication).component
+    }
+
     private var screenMode = UNKNOWN_MODE
     private var shopItemId = ShopItem.UNDEFINED_ID
     private lateinit var onEditingFinishedListener: OnEditingFinishedListener
@@ -30,6 +35,7 @@ class ShopItemFragment : Fragment() {
         get() = _binding ?: throw Exception("FragmentShopItemBinding = null")
 
     override fun onAttach(context: Context) {
+        component.inject(this)
         super.onAttach(context)
         if (context is OnEditingFinishedListener) {
             onEditingFinishedListener = context
@@ -55,7 +61,6 @@ class ShopItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        shopItemViewModel = ViewModelProvider(this).get(ShopItemViewModel::class.java)
         observeViewModel()
         setListeners()
         launchRightMode()
